@@ -1,3 +1,4 @@
 flask
 gtts
 gunicorn
+flask-cors
