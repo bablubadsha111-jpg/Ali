@@ -4,14 +4,16 @@ from flask_cors import CORS
 import os
 
 app = Flask(__name__)
-CORS(app)  # ✅ CORS fix
+CORS(app)  # ✅ CORS enable
 
+# ✅ Home route
 @app.route("/")
 def home():
     return "Server Running ✅"
 
+# ✅ TTS route
 @app.route("/tts", methods=["POST"])
-def tts():
+def generate_tts():
     try:
         data = request.get_json()
 
@@ -23,11 +25,11 @@ def tts():
 
         filename = "output.mp3"
 
-        # पुरानी file delete (important)
+        # ✅ पुरानी file delete
         if os.path.exists(filename):
             os.remove(filename)
 
-        # TTS generate
+        # ✅ TTS generate
         tts = gTTS(text=text, lang="en")
         tts.save(filename)
 
@@ -40,5 +42,6 @@ def tts():
         return jsonify({"error": str(e)}), 500
 
 
+# ✅ Run local (Render ignore करेगा)
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=10000)
